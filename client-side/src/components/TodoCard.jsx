@@ -7,7 +7,7 @@ import { RiWechatLine } from "react-icons/ri";
 import { AiOutlinePaperClip } from "react-icons/ai";
 const TodoCard = () => {
   return (
-    <div className="max-w-[350px] text-gray-800 bg-white p-3 rounded shadow">
+    <div className="max-w-[350px] text-gray-800 bg-white p-3 rounded shadow w-96 mr-1">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
           <img
@@ -28,7 +28,7 @@ const TodoCard = () => {
       </div>
       <div className="flex items-center justify-between gap-1 my-3">
         <div className="flex items-center gap-1">
-          <FaLayerGroup /> <p>Lorem ipsum, dolor sit amet elit...</p>
+          <FaLayerGroup /> <p>Lorem ipsum, dolor sit amet...</p>
         </div>
         <button className="font-semibold flex items-center gap-1 px-1 bg-slate-200 rounded">
           <FaClipboardList /> <p>1/2</p>
