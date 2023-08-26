@@ -8,9 +8,20 @@ import { AiOutlinePaperClip } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { useState } from "react";
 import UploadAttachments from "./UploadAttachments";
-const TodoCard = () => {
+const TodoCard = ({ todo, category }) => {
   const [isMsgModal, setIsMsgModal] = useState(false);
   const [isAttachmentModal, setIsAttachmentModal] = useState(false);
+  const {
+    _id,
+    client,
+    assignedTo,
+    task,
+    participants,
+    message,
+    attachment,
+    dueDate,
+  } = todo;
+  console.log(_id);
   return (
     <>
       <div className="max-w-[350px] text-gray-800 bg-white   w-96 rounded mr-1 relative">
@@ -48,23 +59,23 @@ const TodoCard = () => {
             <div className="flex items-center gap-1">
               <img
                 className="h-8 w-8 object-cover rounded-full"
-                src="https://uploads-ssl.webflow.com/61de06d4abe5f704a2b83cc6/62702bd164ffe48304364225_Circle%20profile%20400x400%20(1).jpeg"
+                src={client?.profileImageUrl}
                 alt=""
               />{" "}
-              <h4 className="font-semibold">Client Name</h4>
+              <h4 className="font-semibold">{client?.name}</h4>
             </div>
             <div className="flex items-center gap-1">
               <img
                 className="h-8 w-8 object-cover rounded-full"
-                src="https://media.istockphoto.com/id/1309328823/photo/headshot-portrait-of-smiling-male-employee-in-office.webp?b=1&s=170667a&w=0&k=20&c=MRMqc79PuLmQfxJ99fTfGqHL07EDHqHLWg0Tb4rPXQc="
+                src={client?.profileImageUrl}
                 alt=""
               />{" "}
-              <h4 className="font-semibold">Sadik Istiak</h4>
+              <h4 className="font-semibold">{assignedTo?.name}</h4>
             </div>
           </div>
           <div className="flex items-center justify-between gap-1 my-3">
             <div className="flex items-center gap-1">
-              <FaLayerGroup /> <p>Lorem ipsum, dolor sit amet...</p>
+              <FaLayerGroup /> <p>{task?.description}</p>
             </div>
             <button className="font-semibold flex items-center gap-1 px-1 bg-slate-200 rounded">
               <FaClipboardList /> <p>1/2</p>
@@ -86,30 +97,35 @@ const TodoCard = () => {
               />
             </div>
             <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
-              <span>12+</span>
+              <span>{participants.length - 1}+</span>
             </div>
             <button
               onClick={() => setIsMsgModal(!isMsgModal)}
               className="flex items-center"
             >
-              <RiWechatLine className="text-lg" /> <span>15</span>
+              <RiWechatLine className="text-lg" /> <span>{message.length}</span>
             </button>
             <button
               onClick={() => setIsAttachmentModal(!isAttachmentModal)}
               className="flex items-center"
             >
-              <AiOutlinePaperClip className="text-lg" /> <span>25</span>
+              <AiOutlinePaperClip className="text-lg" />{" "}
+              <span>{attachment.length}</span>
             </button>
             <div className="flex items-center">
-              <FaRegCalendarAlt /> <span>10-12-2023</span>
+              <FaRegCalendarAlt /> <span>{dueDate}</span>
             </div>
           </div>
         </div>
       </div>
       {isAttachmentModal && (
-        <div className="fixed top-0 left-0 grid justify-center items-center bg-black/40 backdrop-blur w-full h-full z-20">
+        <div className="fixed -top-5 left-0 grid justify-center items-center bg-black/60 backdrop-blur w-full h-full z-20">
           <div className="bg-white rounded-xl relative">
-            <UploadAttachments />
+            <UploadAttachments
+              _id={_id}
+              category={category}
+              isModal={setIsAttachmentModal}
+            />
             <button
               className="absolute top-2 right-2 p-1 bg-red-200 rounded-full"
               onClick={() => setIsAttachmentModal(!isAttachmentModal)}

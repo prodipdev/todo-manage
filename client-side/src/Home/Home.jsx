@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react";
 import TodoContainer from "../components/TodoContainer";
 
 const Home = () => {
+  const [allTodos, setAllTodos] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/todos")
+      .then((res) => res.json())
+      .then((data) => setAllTodos(data));
+  }, []);
+  console.log(allTodos);
   return (
-    <div className="min-h-screen px-10">
+    <div className="p-5">
       <div className="flex overflow-y-auto gap-8 relative">
         <TodoContainer category={"Incomplete"} />
         <TodoContainer category={"To Do"} />

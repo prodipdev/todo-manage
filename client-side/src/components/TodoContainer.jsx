@@ -1,7 +1,16 @@
-/* eslint-disable react/prop-types */
+import { useTodoContext } from "../TodoContext/TodoContext";
 import TodoCard from "./TodoCard";
 
 const TodoContainer = ({ category }) => {
+  const { allTodos } = useTodoContext();
+  // convert into lowercase
+  const categoryName = category.toLowerCase().replace(/\s+/g, "");
+  // find specific category
+  const todosForCategory = allTodos.filter(
+    (todo) => todo.category == categoryName
+  );
+  const todos = todosForCategory[0]?.todos;
+
   // Get color class for specific category
   const getCategory = (category) => {
     switch (category) {
@@ -30,20 +39,13 @@ const TodoContainer = ({ category }) => {
           <h4 className="text-xl">{category}</h4>
         </div>
         <div className="w-8 h-8 bg-slate-300 text-xl flex justify-center items-center rounded">
-          0
+          {todos.length}
         </div>
       </div>
-      <div className="mt-5 grid gap-5 h-screen overflow-y-auto">
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
-        <TodoCard />
+      <div className="mt-5 space-y-5 h-screen overflow-y-auto">
+        {todos?.map((todo) => (
+          <TodoCard key={todo?.id} todo={todo} category={categoryName} />
+        ))}
       </div>
     </div>
   );
