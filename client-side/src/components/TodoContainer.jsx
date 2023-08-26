@@ -39,7 +39,7 @@ const TodoContainer = ({ category }) => {
           <h4 className="text-xl">{category}</h4>
         </div>
         <div className="w-8 h-8 bg-slate-300 text-xl flex justify-center items-center rounded">
-          {todos.length}
+          {todos?.length}
         </div>
       </div>
       <div className="mt-5 space-y-5 h-screen overflow-y-auto">

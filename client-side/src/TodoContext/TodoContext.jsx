@@ -10,6 +10,7 @@ export function useTodoContext() {
 export function TodoProvider({ children }) {
   const [allTodos, setAllTodos] = useState([]);
   const [refetch, setRefetch] = useState(new Date());
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetch("https://todo-prodipdev.vercel.app/todos")
@@ -27,6 +28,8 @@ export function TodoProvider({ children }) {
     allTodos,
     updateTodos,
     setRefetch,
+    loading,
+    setLoading,
   };
 
   return (

@@ -25,7 +25,7 @@ const AttachmentList = ({ attachments }) => {
 
 const UploadAttachments = ({ _id, category, isModal }) => {
   const [uploadedAttachments, setUploadedAttachments] = useState([]);
-  const { setRefetch } = useTodoContext();
+  const { setRefetch, setLoading } = useTodoContext();
 
   // get every new file and store
   const handleFileUpload = (event) => {
@@ -38,6 +38,7 @@ const UploadAttachments = ({ _id, category, isModal }) => {
 
   // upload attachments in server
   const handleUploadedAttachments = () => {
+    setLoading(true);
     fetch(
       `https://todo-prodipdev.vercel.app/add-attachment/${category}/${_id}`,
       {
@@ -52,9 +53,11 @@ const UploadAttachments = ({ _id, category, isModal }) => {
         console.log(res);
         isModal(false);
         setRefetch(new Date());
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   };
 

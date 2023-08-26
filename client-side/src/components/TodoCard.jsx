@@ -21,7 +21,6 @@ const TodoCard = ({ todo, category }) => {
     attachment,
     dueDate,
   } = todo;
-  console.log(_id);
   return (
     <>
       <div className="max-w-[350px] text-gray-800 bg-white   w-96 rounded mr-1 relative">
