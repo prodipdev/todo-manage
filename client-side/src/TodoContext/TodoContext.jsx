@@ -12,7 +12,7 @@ export function TodoProvider({ children }) {
   const [refetch, setRefetch] = useState(new Date());
 
   useEffect(() => {
-    fetch("http://localhost:5000/todos")
+    fetch("https://todo-prodipdev.vercel.app/todos")
       .then((res) => res.json())
       .then((data) => setAllTodos(data));
   }, [refetch]);

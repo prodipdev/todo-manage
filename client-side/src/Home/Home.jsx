@@ -4,7 +4,7 @@ import TodoContainer from "../components/TodoContainer";
 const Home = () => {
   const [allTodos, setAllTodos] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/todos")
+    fetch("https://todo-prodipdev.vercel.app/todos")
       .then((res) => res.json())
       .then((data) => setAllTodos(data));
   }, []);
