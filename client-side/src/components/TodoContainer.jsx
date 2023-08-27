@@ -42,7 +42,7 @@ const TodoContainer = ({ category }) => {
           {todos?.length}
         </div>
       </div>
-      <div className="mt-5 space-y-5 h-screen overflow-y-auto">
+      <div className="mt-5 space-y-5 h-[calc(100vh-160px)] overflow-y-auto overflow-x-hidden">
         {todos?.map((todo) => (
           <TodoCard key={todo?.id} todo={todo} category={categoryName} />
         ))}

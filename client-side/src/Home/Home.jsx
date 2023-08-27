@@ -12,7 +12,7 @@ const Home = () => {
           <PuffLoader color="#334155" />
         </div>
       ) : (
-        <div className="p-5">
+        <div className="p-5 m-5 h-[calc(100vh-40px)] shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] rounded-xl">
           <div className="flex overflow-y-auto gap-8 relative">
             <TodoContainer category={"Incomplete"} />
             <TodoContainer category={"To Do"} />
