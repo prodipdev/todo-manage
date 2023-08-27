@@ -13,39 +13,27 @@ export function TodoProvider({ children }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let intervalId;
-
-    if (allTodos.length === 0) {
+    if (allTodos?.length === 0) {
       setLoading(true);
-      intervalId = setInterval(() => {
-        console.log("call");
-        fetch("https://todo-dip.onrender.com/todos")
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return res.json();
-          })
-          .then((data) => {
-            if (data.length > 0) {
-              clearInterval(intervalId); // Stop fetching once data is received
-              setAllTodos(data);
-              setLoading(false);
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching data:", error);
-            setLoading(false);
-          });
-      }, 2000);
     }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [allTodos, refetch]);
+    fetch("https://todo-dip.onrender.com/todos")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.length > 0) {
+          setAllTodos(data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, [refetch, allTodos?.length]);
 
   const updateTodos = (updatedTodo) => {
     setAllTodos((prevTodos) =>

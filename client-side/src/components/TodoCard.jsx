@@ -41,10 +41,14 @@ const TodoCard = ({ todo, category }) => {
         console.log(res);
         setRefetch(new Date());
         setLoading(false);
+        setIsMsgModal(false);
+        setNewMessage("");
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
+        setIsMsgModal(false);
+        setNewMessage("");
       });
   };
   return (
