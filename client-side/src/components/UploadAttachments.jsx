@@ -39,16 +39,13 @@ const UploadAttachments = ({ _id, category, isModal }) => {
   // upload attachments in server
   const handleUploadedAttachments = () => {
     setLoading(true);
-    fetch(
-      `https://todo-prodipdev.vercel.app/add-attachment/${category}/${_id}`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(uploadedAttachments),
-      }
-    )
+    fetch(`https://todo-dip.vercel.app/add-attachment/${category}/${_id}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(uploadedAttachments),
+    })
       .then((res) => {
         console.log(res);
         isModal(false);

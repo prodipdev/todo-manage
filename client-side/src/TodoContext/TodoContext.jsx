@@ -14,7 +14,7 @@ export function TodoProvider({ children }) {
   console.log(allTodos);
   useEffect(() => {
     setLoading(true);
-    fetch("https://todo-prodipdev.vercel.app/todos")
+    fetch("https://todo-dip.vercel.app/todos")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Network response was not ok");

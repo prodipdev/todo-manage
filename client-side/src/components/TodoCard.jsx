@@ -30,7 +30,7 @@ const TodoCard = ({ todo, category }) => {
 
   const handleUploadedMessage = () => {
     setLoading(true);
-    fetch(`https://todo-prodipdev.vercel.app/add-message/${category}/${_id}`, {
+    fetch(`https://todo-dip.vercel.app/add-message/${category}/${_id}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
