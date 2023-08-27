@@ -8,9 +8,15 @@ import { AiOutlinePaperClip } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { useState } from "react";
 import UploadAttachments from "./UploadAttachments";
+import { useTodoContext } from "../TodoContext/TodoContext";
+import { ClipLoader } from "react-spinners";
 const TodoCard = ({ todo, category }) => {
+  const [newMessage, setNewMessage] = useState("");
   const [isMsgModal, setIsMsgModal] = useState(false);
   const [isAttachmentModal, setIsAttachmentModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { setRefetch } = useTodoContext();
+
   const {
     _id,
     client,
@@ -21,36 +27,71 @@ const TodoCard = ({ todo, category }) => {
     attachment,
     dueDate,
   } = todo;
+
+  const handleUploadedMessage = () => {
+    setLoading(true);
+    fetch(`https://todo-prodipdev.vercel.app/add-message/${category}/${_id}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ content: newMessage }),
+    })
+      .then((res) => {
+        console.log(res);
+        setRefetch(new Date());
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
   return (
     <>
       <div className="max-w-[350px] text-gray-800 bg-white   w-96 rounded mr-1 relative">
         {/* Message Modal */}
         {isMsgModal && (
           <div className="w-full h-full absolute bg-white/20 backdrop-blur-md p-3 rounded flex gap-1 flex-col justify-between overflow-y-auto">
-            <div className="">
-              <h5 className="font-semibold text-sm">Write Message</h5>
-              <textarea
-                className="w-full rounded px-1 outline-green-200"
-                name="attachment"
-                id="attachment"
-                placeholder="Type your message.."
-              ></textarea>
-            </div>
+            {loading ? (
+              <div className="h-[135px] flex items-center justify-center">
+                <ClipLoader color="#36d7b7" />
+              </div>
+            ) : (
+              <>
+                <div className="">
+                  <h5 className="font-semibold text-sm">Write Message</h5>
+                  <textarea
+                    className="w-full rounded px-1 outline-green-200"
+                    name="attachment"
+                    id="attachment"
+                    placeholder="Type your message.."
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                  ></textarea>
+                </div>
 
-            <div className="flex gap-5 font-semibold">
-              <button
-                className="px-3 bg-red-500 text-white rounded"
-                onClick={() => setIsMsgModal(!isMsgModal)}
-              >
-                Close
-              </button>
-              <button
-                className="px-3 bg-green-500 text-white rounded"
-                onClick={() => setIsMsgModal(!isMsgModal)}
-              >
-                Send
-              </button>
-            </div>
+                <div className="flex gap-5 font-semibold">
+                  <button
+                    className="px-3 bg-red-500 text-white rounded"
+                    onClick={() => setIsMsgModal(!isMsgModal)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className={`px-3 ${
+                      newMessage?.length === 0
+                        ? "bg-green-300 cursor-not-allowed"
+                        : "bg-green-500"
+                    } text-white rounded`}
+                    onClick={handleUploadedMessage}
+                    disabled={newMessage?.length === 0}
+                  >
+                    Send
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         )}
         <div className="p-3">
@@ -66,7 +107,7 @@ const TodoCard = ({ todo, category }) => {
             <div className="flex items-center gap-1">
               <img
                 className="h-8 w-8 object-cover rounded-full"
-                src={client?.profileImageUrl}
+                src={assignedTo?.profileImageUrl}
                 alt=""
               />{" "}
               <h4 className="font-semibold">{assignedTo?.name}</h4>

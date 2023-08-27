@@ -11,11 +11,24 @@ export function TodoProvider({ children }) {
   const [allTodos, setAllTodos] = useState([]);
   const [refetch, setRefetch] = useState(new Date());
   const [loading, setLoading] = useState(false);
-
+  console.log(allTodos);
   useEffect(() => {
+    setLoading(true);
     fetch("https://todo-prodipdev.vercel.app/todos")
-      .then((res) => res.json())
-      .then((data) => setAllTodos(data));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setAllTodos(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
   }, [refetch]);
 
   const updateTodos = (updatedTodo) => {

@@ -10,7 +10,7 @@ const TodoContainer = ({ category }) => {
     (todo) => todo.category == categoryName
   );
   const todos = todosForCategory[0]?.todos;
-
+  console.log("allTodos", allTodos);
   // Get color class for specific category
   const getCategory = (category) => {
     switch (category) {
@@ -31,7 +31,7 @@ const TodoContainer = ({ category }) => {
 
   return (
     <div className="bg-slate-200 w-fit p-3 rounded-lg">
-      <div className="flex items-center justify-between font-semibold">
+      <div className="flex items-center justify-between gap-5 font-semibold">
         <div className="flex items-center gap-2">
           <div
             className={`h-5 w-5 ${getCategory(category)} rounded-l-full`}
