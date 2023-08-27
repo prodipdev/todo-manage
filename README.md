@@ -1,6 +1,6 @@
 # Todo-Dip Management
 
-[![Project UI](./img/overview.png)](https://todo-dip.netlify.app/)
+[![Project UI](./client-side/src/assets/overview.png)](https://todo-dip.netlify.app/)
 
 ## Overview
 
