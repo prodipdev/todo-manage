@@ -39,7 +39,7 @@ const UploadAttachments = ({ _id, category, isModal }) => {
   // upload attachments in server
   const handleUploadedAttachments = () => {
     setLoading(true);
-    fetch(`https://todo-dip.vercel.app/add-attachment/${category}/${_id}`, {
+    fetch(`https://todo-dip.onrender.com/add-attachment/${category}/${_id}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -11,25 +11,41 @@ export function TodoProvider({ children }) {
   const [allTodos, setAllTodos] = useState([]);
   const [refetch, setRefetch] = useState(new Date());
   const [loading, setLoading] = useState(false);
-  console.log(allTodos);
+
   useEffect(() => {
-    setLoading(true);
-    fetch("https://todo-dip.vercel.app/todos")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setAllTodos(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      });
-  }, [refetch]);
+    let intervalId;
+
+    if (allTodos.length === 0) {
+      setLoading(true);
+      intervalId = setInterval(() => {
+        console.log("call");
+        fetch("https://todo-dip.onrender.com/todos")
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            if (data.length > 0) {
+              clearInterval(intervalId); // Stop fetching once data is received
+              setAllTodos(data);
+              setLoading(false);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+            setLoading(false);
+          });
+      }, 2000);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [allTodos, refetch]);
 
   const updateTodos = (updatedTodo) => {
     setAllTodos((prevTodos) =>
